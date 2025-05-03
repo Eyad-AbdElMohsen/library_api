@@ -1,13 +1,8 @@
 import { Module } from "@nestjs/common";
-import { UserController } from "./user/user.controller";
-import { UserService } from "./user/user.service";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from "./models/user.model";
-import { AuthController } from './auth/auth.controller';
-import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
-import { UserRepository } from "./user/user.repository";
 import { UserModule } from "./user/user.module";
 import { AuthorModule } from './author/author.module';
 

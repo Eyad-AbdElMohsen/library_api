@@ -17,7 +17,6 @@ export class AuthService {
     }
 
     async comparePassword(inputPass: string, userPass: string){
-        console.log(inputPass, userPass)
         return await compare(inputPass, userPass)
     }
 

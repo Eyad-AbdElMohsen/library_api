@@ -3,7 +3,7 @@ import { Table, Model, Column, DataType, PrimaryKey, AutoIncrement } from "seque
 
 
 @Table
-export class User extends Model {
+export class Author extends Model {
     @Column({ primaryKey: true, autoIncrement: true, type: DataType.INTEGER })
     declare id: CreationOptional<number>
   
