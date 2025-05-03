@@ -24,10 +24,12 @@ export class AuthorService {
     }
 
     async updateAuthorDetails(id: number, updateAuthorDto?: UpdateAuthorDto, image?: string) {
-        const res = await this.authorRepository.update(id, updateAuthorDto, image)
-        if(!res[0])
-            throw new HttpException('No thing updated', HttpStatus.NOT_MODIFIED);
-        return { message: 'Successfully Updated!' };
+        await this.getAuthorById(id)
+        const [count, row] = await this.authorRepository.update(id, updateAuthorDto, image)
+        if(!count)
+            throw new HttpException('No thing updated', HttpStatus.UNPROCESSABLE_ENTITY);
+        return row;
+    
     }
 
     async deleteAuthor(id: number) {

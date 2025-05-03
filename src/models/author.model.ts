@@ -1,5 +1,6 @@
 import { CreationOptional } from "sequelize";
-import { Table, Model, Column, DataType, PrimaryKey, AutoIncrement } from "sequelize-typescript";
+import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
+import { Book } from "./book.model";
 
 
 @Table
@@ -15,6 +16,9 @@ export class Author extends Model {
 
     @Column({ type: DataType.STRING, allowNull: true })
     image: string;
+
+    @HasMany(() => Book)
+    book: Book
 
     @Column({ type: DataType.DATE })
     declare createdAt: CreationOptional<Date>;

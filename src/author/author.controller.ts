@@ -34,7 +34,7 @@ export class AuthorController {
         @Body() updateAuthorDto?: UpdateAuthorDto,
         @UploadedFile(new FileSizeValidationPipe()) image?: Express.Multer.File,
     ) {
-        return this.authorService.updateAuthorDetails(id, updateAuthorDto, image?.originalname)
+        return this.authorService.updateAuthorDetails(id, updateAuthorDto, image?.filename)
     }
 
     @Delete(':id')

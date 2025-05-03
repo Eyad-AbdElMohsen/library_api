@@ -24,11 +24,13 @@ export class AuthorRepository {
     }
 
     async update(id: number, updateUserDto?: UpdateAuthorDto, image?: string) {
-        console.log(updateUserDto, image)
         return await this.authorModel.update({
             name: updateUserDto?.name,
             image
-        }, { where: { id } }
+        }, {
+            where: { id },
+            returning: true
+        }
         )
     }
 
