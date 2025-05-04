@@ -27,7 +27,7 @@ export class BookController {
     //@UseGuards(JwtAuthGuard)
     // user has token 
     getBookById(@Param('id', ParseIntPipe) id: number) {
-        const userId = 1
+        const userId = 2
         return this.bookService.getBookById(id, userId)
     }
 

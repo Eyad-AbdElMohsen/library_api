@@ -1,5 +1,5 @@
 import { CreationOptional } from "sequelize";
-import { AfterCreate, AfterDestroy, BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table } from "sequelize-typescript";
+import { AfterCreate, AfterDestroy, BeforeDestroy, BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table } from "sequelize-typescript";
 import { Author } from "./author.model";
 import { BookStats } from "./book-stats.model";
 
@@ -31,13 +31,7 @@ export class Book extends Model {
 
     @AfterCreate
     static async createBookStats(instance: Book) {
-        if (!instance.id) return;
         await BookStats.create({ bookId: instance.id });
-    }
-    @AfterDestroy
-    static async destroyBookStats(instance: Book) {
-        if (!instance.id) return;
-        await BookStats.destroy({ where: { bookId: instance.id } });
     }
 
     @Column({ type: DataType.DATE })

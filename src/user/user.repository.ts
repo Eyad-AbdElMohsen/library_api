@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { User } from "src/models/user.model";
 import { CreateUserDto } from "./dto/CreateUser.dto";
+import { Op } from "sequelize";
 
 @Injectable()
 export class UserRepository {
@@ -25,7 +26,21 @@ export class UserRepository {
   }
 
   async delete(id: number) {
-    const res = await this.userModel.destroy({ where: { id } })
-    return res === 1; 
+    const res = await this.userModel.destroy({ 
+      where: { id },
+      force: true, // for @AfterDestroy hook
+    })
+    return res === 1;
+  }
+
+  async getEmails(users: Array<number>) {
+    return await this.userModel.findAll({
+      where: {
+        id: {
+          [Op.in]: users
+        }
+      },
+      attributes: ['email']
+    })
   }
 }

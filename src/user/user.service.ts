@@ -1,9 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { UserRepository } from "./user.repository";
+import { BookStatsRepository } from "src/book-stats/book-stats.repository";
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) { }
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly bookStatsRepository: BookStatsRepository
+  ) { }
 
   async findAll() {
     return this.userRepository.findAll()
@@ -17,6 +21,7 @@ export class UserService {
   }
 
   async deleteUser(id: number) {
+    await this.bookStatsRepository.removeUser(id)
     const res = await this.userRepository.delete(id)
     if (!res)
       throw new HttpException('No User Found', HttpStatus.NOT_FOUND,);

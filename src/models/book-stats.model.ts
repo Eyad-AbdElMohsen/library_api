@@ -8,7 +8,7 @@ export class BookStats extends Model {
     @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
     declare id: CreationOptional<number>
 
-    @Column({ type: DataType.ARRAY(DataType.INTEGER),allowNull: false, defaultValue: [] })
+    @Column({ type: DataType.ARRAY(DataType.INTEGER), allowNull: false, defaultValue: [] })
     views: number[];
 
     @Column({ type: DataType.ARRAY(DataType.INTEGER), allowNull: false, defaultValue: [] })
@@ -21,7 +21,7 @@ export class BookStats extends Model {
     averageRating: number
 
     @ForeignKey(() => Book)
-    @Column({ type: DataType.INTEGER, allowNull: false })
+    @Column({ type: DataType.INTEGER, allowNull: false, onDelete: 'CASCADE' })
     bookId: number;
     @BelongsTo(() => Book)
     book: Book
