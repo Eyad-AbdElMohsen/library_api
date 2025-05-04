@@ -13,7 +13,8 @@ export class BookController {
     @Post()
     createNewBook(
         @UploadedFile(new FileSizeValidationPipe()) image: Express.Multer.File,
-        @Body() createBookDto: CreateBookDto) {
+        @Body() createBookDto: CreateBookDto
+    ) {
         return this.bookService.createNewBook(createBookDto, image.filename)
     }
 
@@ -23,8 +24,11 @@ export class BookController {
     }
 
     @Get(':id')
+    //@UseGuards(JwtAuthGuard)
+    // user has token 
     getBookById(@Param('id', ParseIntPipe) id: number) {
-        return this.bookService.getBookById(id)
+        const userId = 1
+        return this.bookService.getBookById(id, userId)
     }
 
     @UseInterceptors(AuthorImageInterceptor())

@@ -3,6 +3,7 @@ import { CreateAuthorDto } from "./dto/CreateAuthor.dto";
 import { InjectModel } from "@nestjs/sequelize";
 import { Author } from "src/models/author.model";
 import { UpdateAuthorDto } from "./dto/UpdateAuthor.dto";
+import { Book } from "src/models/book.model";
 
 
 
@@ -20,7 +21,7 @@ export class AuthorRepository {
     }
 
     async findById(id: number) {
-        return await this.authorModel.findByPk(id)
+        return await this.authorModel.findByPk(id, { include: Book })
     }
 
     async update(id: number, updateUserDto?: UpdateAuthorDto, image?: string) {

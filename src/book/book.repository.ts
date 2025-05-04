@@ -10,8 +10,6 @@ export class BookRepository {
 
     async create(createBookDto: CreateBookDto, image: string) {
         const { title, category, publishedYear, authorId } = createBookDto
-        console.log('anujdihgvofiuoedhguitrnudshioungtroiufbnuirgfnbiuortngiub', publishedYear)
-        console.log(new Date())
         return await this.bookModel.create({ title, category, publishedYear, authorId, image })
     }
 

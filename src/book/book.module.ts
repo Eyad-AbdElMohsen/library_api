@@ -4,10 +4,14 @@ import { BookService } from './book.service';
 import { Book } from 'src/models/book.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { BookRepository } from './book.repository';
+import { BookStatsModule } from 'src/book-stats/book-stats.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Book])],
+  imports: [
+    SequelizeModule.forFeature([Book]),
+    BookStatsModule
+  ],
   controllers: [BookController],
   providers: [BookService, BookRepository]
 })
-export class BookModule {}
+export class BookModule { }

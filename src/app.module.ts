@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from "./user/user.module";
 import { AuthorModule } from './author/author.module';
 import { BookModule } from './book/book.module';
+import { BookStatsModule } from './book-stats/book-stats.module';
 
 @Module({
   imports: [
@@ -20,13 +21,15 @@ import { BookModule } from './book/book.module';
         uri: configService.get('DATABASE_URL'), // Get the DATABASE_URL from the .env file
         autoLoadModels: true,
         synchronize: true,
+        sync: { alter: true },
         models: [User]
       }),
     }),
     AuthModule,
     UserModule,
     AuthorModule,
-    BookModule
+    BookModule,
+    BookStatsModule
   ]
 })
 export class AppModule {}
