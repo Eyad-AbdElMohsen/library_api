@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Request, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/CreateBook.dto';
 import { AuthorImageInterceptor } from 'src/common/interceptors/multer.interceptor';
 import { FileSizeValidationPipe } from 'src/common/pipes/multer.pipe';
 import { UpdateBookDto } from './dto/UpdateBook.dto';
+import { AuthGuard } from 'src/common/gaurds/Auth.gaurd';
+import { JwtPayload } from 'src/user/dto/JwtPayload.dto';
 
 @Controller('books')
 export class BookController {
@@ -24,11 +26,12 @@ export class BookController {
     }
 
     @Get(':id')
-    //@UseGuards(JwtAuthGuard)
-    // user has token 
-    getBookById(@Param('id', ParseIntPipe) id: number) {
-        const userId = 1
-        return this.bookService.getBookById(id, userId)
+    @UseGuards(AuthGuard)
+    getBookById(
+        @Request() req: { user: JwtPayload },
+        @Param('id', ParseIntPipe) id: number,
+    ) {
+        return this.bookService.getBookById(id, req.user.id)
     }
 
     @UseInterceptors(AuthorImageInterceptor())

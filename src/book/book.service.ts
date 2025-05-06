@@ -25,7 +25,7 @@ export class BookService {
         const book = await this.bookRepository.findById(id);
         if (!book)
             throw new HttpException('Book not Found!', HttpStatus.NOT_FOUND);
-    
+        
         if (userId) {
             await this.bookStatsService.handleUserView(id, userId);
         }

@@ -7,22 +7,22 @@ import { JWT } from 'src/utils/jwt';
 
 @Injectable()
 export class AuthService {
-    constructor( 
+    constructor(
         private readonly userRepository: UserRepository,
         private readonly jwt: JWT
-    ){}
+    ) { }
 
-    async getUserByEmail(email: string){
-        return await this.userRepository.findByEmail(email)   
+    async getUserByEmail(email: string) {
+        return await this.userRepository.findByEmail(email)
     }
 
-    async comparePassword(inputPass: string, userPass: string){
+    async comparePassword(inputPass: string, userPass: string) {
         return await compare(inputPass, userPass)
     }
 
-    async create(createUserDto: CreateUserDto){
+    async create(createUserDto: CreateUserDto) {
         const isEmailFound = await this.getUserByEmail(createUserDto.email)
-        if(isEmailFound)
+        if (isEmailFound)
             throw new HttpException('This email is already exist', HttpStatus.BAD_REQUEST)
 
         const hashedPassword = await hash(createUserDto.password, 10)
@@ -31,20 +31,20 @@ export class AuthService {
         return await this.userRepository.create(createUserDto)
     }
 
-    async login(loginUserDto: LoginUserDto){
-        const user = await this.getUserByEmail(loginUserDto.email) 
-        if(!user)
+    async login(loginUserDto: LoginUserDto) {
+        const user = await this.getUserByEmail(loginUserDto.email)
+        if (!user)
             throw new HttpException('Email is not found or Password is not correct', HttpStatus.BAD_REQUEST)
 
         const isPasswordCorrect = await this.comparePassword(loginUserDto.password, user.dataValues.password)
-        if(!isPasswordCorrect)
+        if (!isPasswordCorrect)
             throw new HttpException('Email is not found or Password is not correct', HttpStatus.BAD_REQUEST)
 
-        const token = this.jwt.generateJwtToken({
-            id: user.id,
-            email: user.email
+        const token = await this.jwt.generateJwtToken({
+            id: user.dataValues.id,
+            email: user.dataValues.email
         })
-        
-        return token 
-    }
+
+        return token
+     }
 }

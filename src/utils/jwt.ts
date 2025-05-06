@@ -10,16 +10,16 @@ export class JWT {
     async generateJwtToken(payload: JwtPayload) {
         const secretKey = this.configService.get('JWT_SECRET');
         if (secretKey) {
-            return sign(payload, secretKey, { expiresIn: '5h' });
+            return await sign(payload, secretKey, { expiresIn: '5h' });
         } else {
             throw new Error('The secret key is required');
         }
     }
 
-    isJwtTokenValid(token: string) {
+    async isJwtTokenValid(token: string) {
         try {
             const secretKey = this.configService.get('JWT_SECRET');
-            return verify(token, secretKey) as JwtPayload
+            return await verify(token, secretKey) as JwtPayload
         } catch (err) {
             return false
         }

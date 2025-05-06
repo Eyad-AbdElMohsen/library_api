@@ -8,6 +8,7 @@ import { BookStatsModule } from 'src/book-stats/book-stats.module';
 import { Favourite } from 'src/models/favourite.model';
 import { OwnedBook } from 'src/models/ownedBook.model';
 import { User } from 'src/models/user.model';
+import { JWT } from 'src/utils/jwt';
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import { User } from 'src/models/user.model';
     BookStatsModule
   ],
   controllers: [BookController],
-  providers: [BookService, BookRepository]
+  providers: [BookService, BookRepository, JWT]
 })
 export class BookModule { }
