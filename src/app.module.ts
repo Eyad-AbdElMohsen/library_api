@@ -7,6 +7,13 @@ import { UserModule } from "./user/user.module";
 import { AuthorModule } from './author/author.module';
 import { BookModule } from './book/book.module';
 import { BookStatsModule } from './book-stats/book-stats.module';
+import { FavouriteModule } from './favourite/favourite.module';
+import { OwnedBookModule } from './owned-book/owned-book.module';
+import { Book } from "./models/book.model";
+import { BookStats } from "./models/book-stats.model";
+import { Favourite } from "./models/favourite.model";
+import { OwnedBook } from "./models/ownedBook.model";
+import { Author } from "./models/author.model";
 
 @Module({
   imports: [
@@ -22,14 +29,16 @@ import { BookStatsModule } from './book-stats/book-stats.module';
         autoLoadModels: true,
         synchronize: true,
         sync: { alter: true },
-        models: [User]
+        models: [User, Book, BookStats, Favourite, OwnedBook, Author]
       }),
     }),
     AuthModule,
     UserModule,
     AuthorModule,
     BookModule,
-    BookStatsModule
+    BookStatsModule,
+    FavouriteModule,
+    OwnedBookModule,
   ]
 })
 export class AppModule {}

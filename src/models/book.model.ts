@@ -1,7 +1,10 @@
 import { CreationOptional } from "sequelize";
-import { AfterCreate, AfterDestroy, BeforeDestroy, BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table } from "sequelize-typescript";
+import { AfterCreate, AfterDestroy, BeforeDestroy, BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasOne, Model, Table } from "sequelize-typescript";
 import { Author } from "./author.model";
 import { BookStats } from "./book-stats.model";
+import { User } from "./user.model";
+import { Favourite } from "./favourite.model";
+import { OwnedBook } from "./ownedBook.model";
 
 @Table
 export class Book extends Model {
@@ -28,6 +31,11 @@ export class Book extends Model {
 
     @HasOne(() => BookStats)
     bookStats: BookStats;
+
+    @BelongsToMany(() => User, () => Favourite)
+    favouritedByUsers: User[]
+    @BelongsToMany(() => User, () => OwnedBook)
+    owners: User[]
 
     @AfterCreate
     static async createBookStats(instance: Book) {

@@ -1,7 +1,8 @@
 import { CreationOptional, Op, Sequelize, where } from "sequelize";
-import { Table, Model, Column, DataType, AfterDestroy } from "sequelize-typescript";
-import { BookStats } from "./book-stats.model";
-
+import { Table, Model, Column, DataType, AfterDestroy, BelongsToMany } from "sequelize-typescript";
+import { Book } from "./book.model";
+import { Favourite } from "./favourite.model";
+import { OwnedBook } from "./ownedBook.model";
 
 @Table
 export class User extends Model {
@@ -13,6 +14,12 @@ export class User extends Model {
 
     @Column({ type: DataType.STRING, allowNull: false })
     password: string;
+
+    @BelongsToMany(() => Book, () => Favourite)
+    favourites: Book[];
+
+    @BelongsToMany(() => Book, () => OwnedBook)
+    ownedBooks: Book[];
 
     @Column({ type: DataType.DATE })
     declare createdAt: CreationOptional<Date>;

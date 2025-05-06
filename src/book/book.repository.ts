@@ -1,7 +1,6 @@
 import { InjectModel } from "@nestjs/sequelize";
 import { Book } from "src/models/book.model";
 import { CreateBookDto } from "./dto/CreateBook.dto";
-import { UpdateAuthorDto } from "src/author/dto/UpdateAuthor.dto";
 import { UpdateBookDto } from "./dto/UpdateBook.dto";
 
 
