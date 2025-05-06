@@ -1,5 +1,5 @@
 import { CreationOptional } from "sequelize";
-import { Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
 import { Book } from "./book.model";
 import { User } from "./user.model";
 
@@ -12,9 +12,16 @@ export class OwnedBook extends Model{
     @ForeignKey(() => Book)
     @Column({ type: DataType.INTEGER, allowNull: false })
     bookId: number;
+    
     @ForeignKey(() => User)
     @Column({ type: DataType.INTEGER, allowNull: false })
     userId: number;
+    
+    @BelongsTo(() => Book)
+    book: Book;
+
+    @BelongsTo(() => User)
+    user: User;
 
     @Column({ type: DataType.DATE })
     declare createdAt: CreationOptional<Date>;

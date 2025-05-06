@@ -13,7 +13,7 @@ export class BookStatsController {
 
     @Patch(':bookId/likes')
     updateBookLikes(@Param('bookId', ParseIntPipe) bookId: number) {
-        const userId = 2    // userId should be from Gaurd
+        const userId = 1    // userId should be from Gaurd
         return this.bookStatsService.updateBookLikes(bookId, userId);
     }
 
@@ -22,7 +22,7 @@ export class BookStatsController {
         @Param('bookId', ParseIntPipe) bookId: number,
         @Body() upsertRatingBookDto: UpsertRatingBookDto
     ) {
-        const userId = 2    // userId should be from Gaurd
+        const userId = 1    // userId should be from Gaurd
         return this.bookStatsService.rateUserBook(bookId, userId, upsertRatingBookDto.rating)
     }
 

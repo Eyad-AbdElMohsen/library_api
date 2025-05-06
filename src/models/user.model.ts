@@ -1,5 +1,5 @@
 import { CreationOptional, Op, Sequelize, where } from "sequelize";
-import { Table, Model, Column, DataType, AfterDestroy, BelongsToMany } from "sequelize-typescript";
+import { Table, Model, Column, DataType, AfterDestroy, BelongsToMany, HasMany } from "sequelize-typescript";
 import { Book } from "./book.model";
 import { Favourite } from "./favourite.model";
 import { OwnedBook } from "./ownedBook.model";
@@ -15,12 +15,18 @@ export class User extends Model {
     @Column({ type: DataType.STRING, allowNull: false })
     password: string;
 
+    @HasMany(() => Favourite)
+    favourites: Favourite[];
+  
+    @HasMany(() => OwnedBook)
+    ownedBooksDetails: OwnedBook[];
+    
     @BelongsToMany(() => Book, () => Favourite)
-    favourites: Book[];
-
+    favouritedBooks: Book[];
+  
     @BelongsToMany(() => Book, () => OwnedBook)
     ownedBooks: Book[];
-
+  
     @Column({ type: DataType.DATE })
     declare createdAt: CreationOptional<Date>;
 
