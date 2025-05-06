@@ -1,0 +1,13 @@
+{
+    "folder-color.pathColors": [
+        {
+            "folderPath": "library_api\\src\\common\\gaurds\\",
+            "color": "foldercolorizer.color_33cc33"
+        },
+        {
+            "folderPath": "library_api\\src\\common\\gaurds\\z.s\\",
+            "color": "foldercolorizer.color_00cc00",
+            "badge": "👉"
+        }
+    ]
+}

@@ -1,9 +1,9 @@
 import { Type } from "class-transformer"
-import { IsDateString, IsDefined, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, MaxLength, MinLength } from "class-validator"
+import { IsDateString, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString, MaxLength, MinLength } from "class-validator"
 import { Author } from "src/models/author.model"
 import { Book } from "src/models/book.model"
-import { IsExistInDB } from "src/validators/isExistInDB.validator"
 import { IsUnique } from "src/validators/IsUnique.validator"
+import { IsExistInDB } from "src/validators/IsInDB.validator"
 
 export class CreateBookDto {
     @IsNotEmpty()
