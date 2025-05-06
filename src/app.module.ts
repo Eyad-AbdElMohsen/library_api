@@ -27,7 +27,7 @@ import { Author } from "./models/author.model";
         dialect: 'postgres', // Specify your dialect
         uri: configService.get('DATABASE_URL'), // Get the DATABASE_URL from the .env file
         autoLoadModels: true,
-        synchronize: true, // add new db
+        synchronize: true, // add new models
         sync: { alter: true }, // update old db
         models: [User, Book, BookStats, Favourite, OwnedBook, Author]
       }),
