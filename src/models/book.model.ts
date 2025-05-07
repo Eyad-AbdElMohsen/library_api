@@ -1,5 +1,15 @@
 import { CreationOptional } from "sequelize";
-import { AfterCreate, AfterDestroy, BeforeDestroy, BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, HasOne, Model, Table } from "sequelize-typescript";
+import {
+    BelongsTo,
+    BelongsToMany,
+    Column,
+    DataType,
+    ForeignKey,
+    HasMany,
+    HasOne,
+    Model,
+    Table
+} from "sequelize-typescript";
 import { Author } from "./author.model";
 import { BookStats } from "./book-stats.model";
 import { User } from "./user.model";
@@ -37,17 +47,34 @@ export class Book extends Model {
 
     @HasMany(() => OwnedBook)
     ownedBooks: OwnedBook[];
-  
+
     @BelongsToMany(() => User, () => Favourite)
     favouritedByUsers: User[];
-  
+
     @BelongsToMany(() => User, () => OwnedBook)
     owners: User[];
 
-    @AfterCreate
-    static async createBookStats(instance: Book) {
-        await BookStats.create({ bookId: instance.id });
-    }
+    // @AfterCreate
+    // static async createBookStats(instance: Book, options: any) {
+    //     const transaction = options.transaction
+    //     if (!transaction) {
+    //         throw new Error('Transaction is required for "createBookStats" hook');
+    //     }
+    //     console.log(instance.dataValues)
+    //     await BookStats.create({ bookId: instance.dataValues.id });
+    // }
+
+    // @AfterDestroy
+    // static async removeBookStats(instance: Book, options: any) {
+    //     const transaction = options.transaction
+    //     if (!transaction) {
+    //         throw new Error('Transaction is required for "removeBookStats" hook');
+    //     }
+    //     await BookStats.destroy({
+    //         where: { bookId: instance.id },
+    //         transaction
+    //     });
+    // }
 
     @Column({ type: DataType.DATE })
     declare createdAt: CreationOptional<Date>;

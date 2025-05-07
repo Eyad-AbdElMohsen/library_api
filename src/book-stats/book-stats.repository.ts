@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { Op } from "sequelize";
+import { Op, Transaction } from "sequelize";
 import { Sequelize } from "sequelize-typescript";
 import { BookStats } from "src/models/book-stats.model";
 @Injectable()
@@ -8,7 +8,15 @@ export class BookStatsRepository {
     constructor(
         @InjectModel(BookStats) private BookStatsModel: typeof BookStats
     ) { }
-    
+
+    async create(bookId: number, transaction: Transaction) {
+        return await BookStats.create({ bookId }, { transaction });
+    }
+
+    async delete(bookId: number) {
+        return await BookStats.destroy({ where: { bookId } });
+    }
+
     async findByBookId(bookId: number) {
         return await this.BookStatsModel.findOne({ where: { bookId } })
     }

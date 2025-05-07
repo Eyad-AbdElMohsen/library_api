@@ -1,5 +1,5 @@
 import { CreationOptional, Op, Sequelize, where } from "sequelize";
-import { Table, Model, Column, DataType, AfterDestroy, BelongsToMany, HasMany } from "sequelize-typescript";
+import { Table, Model, Column, DataType, BelongsToMany, HasMany } from "sequelize-typescript";
 import { Book } from "./book.model";
 import { Favourite } from "./favourite.model";
 import { OwnedBook } from "./ownedBook.model";

@@ -7,9 +7,12 @@ import { UpdateBookDto } from "./dto/UpdateBook.dto";
 export class BookRepository {
     constructor(@InjectModel(Book) private bookModel: typeof Book) { }
 
-    async create(createBookDto: CreateBookDto, image: string) {
+    async create(createBookDto: CreateBookDto, image: string, transaction: any) {
         const { title, category, publishedYear, authorId } = createBookDto
-        return await this.bookModel.create({ title, category, publishedYear, authorId, image })
+        return await this.bookModel.create(
+            { title, category, publishedYear, authorId, image },
+            { transaction }
+        )
     }
 
     async findAll() {
