@@ -6,22 +6,17 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class JWT {
     constructor(private configService: ConfigService) { }
-
-    async generateJwtToken(payload: JwtPayload) {
+    generateJwtToken(payload: JwtPayload) {
         const secretKey = this.configService.get('JWT_SECRET');
         if (secretKey) {
-            return await sign(payload, secretKey, { expiresIn: '5h' });
+            return sign(payload, secretKey, { expiresIn: '5h' });
         } else {
             throw new Error('The secret key is required');
         }
     }
 
     async isJwtTokenValid(token: string) {
-        try {
-            const secretKey = this.configService.get('JWT_SECRET');
-            return await verify(token, secretKey) as JwtPayload
-        } catch (err) {
-            return false
-        }
+        const secretKey = this.configService.get('JWT_SECRET');
+        return verify(token, secretKey) as JwtPayload
     }
 }

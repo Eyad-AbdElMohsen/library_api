@@ -9,10 +9,6 @@ export class BookStatsRepository {
         @InjectModel(BookStats) private BookStatsModel: typeof BookStats
     ) { }
 
-    async create(bookId: number, transaction: Transaction) {
-        return await BookStats.create({ bookId }, { transaction });
-    }
-
     async delete(bookId: number) {
         return await BookStats.destroy({ where: { bookId } });
     }

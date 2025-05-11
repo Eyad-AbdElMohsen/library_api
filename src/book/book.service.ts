@@ -20,11 +20,9 @@ export class BookService {
         const transaction: Transaction = await this.sequelize.transaction();
         try {
             const newBook = await this.bookRepository.create(createBookDto, image, transaction)
-            await this.bookStatsRepository.create(newBook.id, transaction)
-            await transaction.commit();
             return newBook
         } catch (err) {
-            console.log('Error in vreating a book: ', err)
+            console.log('Error in creating a book: ', err)
             await transaction.rollback();
             throw new HttpException('Transaction field, pls try again', HttpStatus.INTERNAL_SERVER_ERROR)
         }

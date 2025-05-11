@@ -40,11 +40,11 @@ export class AuthService {
         if (!isPasswordCorrect)
             throw new HttpException('Email is not found or Password is not correct', HttpStatus.BAD_REQUEST)
 
-        const token = await this.jwt.generateJwtToken({
+        const token = this.jwt.generateJwtToken({
             id: user.dataValues.id,
             email: user.dataValues.email
         })
 
-        return token
+        return {token}
      }
 }

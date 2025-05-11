@@ -1,5 +1,6 @@
 import { CreationOptional } from "sequelize";
 import {
+    AfterCreate,
     BelongsTo,
     BelongsToMany,
     Column,
@@ -15,6 +16,7 @@ import { BookStats } from "./book-stats.model";
 import { User } from "./user.model";
 import { Favourite } from "./favourite.model";
 import { OwnedBook } from "./ownedBook.model";
+import { HttpException, HttpStatus } from "@nestjs/common";
 
 @Table
 export class Book extends Model {
@@ -54,15 +56,24 @@ export class Book extends Model {
     @BelongsToMany(() => User, () => OwnedBook)
     owners: User[];
 
-    // @AfterCreate
-    // static async createBookStats(instance: Book, options: any) {
-    //     const transaction = options.transaction
-    //     if (!transaction) {
-    //         throw new Error('Transaction is required for "createBookStats" hook');
-    //     }
-    //     console.log(instance.dataValues)
-    //     await BookStats.create({ bookId: instance.dataValues.id });
-    // }
+    @AfterCreate
+    static async createBookStats(instance: Book, options: any) {
+        const transaction = options.transaction
+        if (!transaction) {
+            throw new Error('Transaction is required for "createBookStats" hook');
+        }
+        try {
+            await BookStats.create(
+                { bookId: instance.dataValues.id },
+                { transaction }
+            );
+            await transaction.commit();
+        } catch (err) {
+            console.log('Error in creating a book stats: ', err)
+            await transaction.rollback();
+            throw new HttpException('Transaction field, pls try again', HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
 
     // @AfterDestroy
     // static async removeBookStats(instance: Book, options: any) {

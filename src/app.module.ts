@@ -29,7 +29,8 @@ import { Author } from "./models/author.model";
         autoLoadModels: true,
         synchronize: true, // add new models
         sync: { alter: true }, // update old db
-        models: [User, Book, BookStats, Favourite, OwnedBook, Author]
+        models: [User, Book, BookStats, Favourite, OwnedBook, Author],
+        logging: false
       }),
     }),
     AuthModule,
